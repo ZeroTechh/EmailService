@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	config     = hades.GetConfig("main.yaml", []string{"config", "../config"})
+	config     = hades.GetConfig("main.yaml", []string{"config", "../config", "../../config"})
 	smtpConfig = config.Map("smtp")
 	sendMails  = config.Map("service").Bool("sendMails")
 )
