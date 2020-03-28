@@ -1,0 +1,10 @@
+service:
+  sendMails: false
+  debug: true
+  logFile: "email_service.log"
+
+smtp:
+  host: "smtp.gmail.com"
+  port: "587"
+  email: "YOUR_GMAIL_EMAIL"
+  password: "YOUR_GMAIL_PASSWORD"
