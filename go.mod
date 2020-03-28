@@ -1,4 +1,4 @@
-module EmailService
+module github.com/ZeroTechh/EmailService
 
 go 1.14
 
