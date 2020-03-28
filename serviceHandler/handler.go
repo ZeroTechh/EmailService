@@ -9,7 +9,7 @@ import (
 	"github.com/ZeroTechh/hades"
 	"go.uber.org/zap"
 
-	"github.com/ZeroTechh/EmailService/email"
+	"github.com/ZeroTechh/EmailService/core/email"
 )
 
 var (
