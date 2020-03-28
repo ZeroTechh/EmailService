@@ -16,6 +16,7 @@ func TestEmail(t *testing.T) {
 
 	// Testing sending of a simple text email
 	err := email.SendSimpleEmail("TEST", smtpConfig.Str("email"))
+
 	assert.NoError(err)
 
 	err = email.SendSimpleEmail("TEST", "Invalid")
@@ -24,5 +25,4 @@ func TestEmail(t *testing.T) {
 	sendMails = false
 	err = email.SendSimpleEmail("TEST", "invalid")
 	assert.NoError(err)
-
 }

@@ -18,7 +18,7 @@ type Email struct {
 }
 
 // Init initializes
-func (email Email) Init() {
+func (email *Email) Init() {
 	email.auth = smtp.PlainAuth(
 		"",
 		smtpConfig.Str("email"),
