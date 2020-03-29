@@ -43,17 +43,10 @@ func (handler Handler) SendSimpleEmail(
 
 	err := handler.email.SendSimpleEmail(emailData.Text, emailData.Email)
 	if err != nil {
-		err = funcLog.Error(
-			err,
-			zap.String("email", emailData.Email),
-			zap.String("text", emailData.Text),
-		)
+		err = funcLog.Error(err)
 		return &proto.Empty{}, err
 	}
 
-	funcLog.Completed(
-		zap.String("email", emailData.Email),
-		zap.String("text", emailData.Text),
-	)
+	funcLog.Completed()
 	return &proto.Empty{}, nil
 }
