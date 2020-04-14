@@ -3,21 +3,14 @@ package serviceHandler
 import (
 	"context"
 
-	"github.com/ZeroTechh/VelocityCore/logger"
 	proto "github.com/ZeroTechh/VelocityCore/proto/EmailService"
-	"github.com/ZeroTechh/blaze"
 	"github.com/ZeroTechh/hades"
-	"go.uber.org/zap"
 
 	"github.com/ZeroTechh/EmailService/core/email"
 )
 
 var (
 	config = hades.GetConfig("main.yaml", []string{"config", "../config"})
-	log    = logger.GetLogger(
-		config.Map("service").Str("logFile"),
-		config.Map("service").Bool("debug"),
-	)
 )
 
 // Handler is used to handle all email service functions
@@ -34,19 +27,11 @@ func (handler *Handler) Init() {
 func (handler Handler) SendSimpleEmail(
 	ctx context.Context,
 	emailData *proto.EmailData) (*proto.Empty, error) {
-	funcLog := blaze.NewFuncLog(
-		"EmailService.Handler.SendSimpleEmail",
-		log,
-		zap.String("email", emailData.Email),
-		zap.String("text", emailData.Text),
-	)
 
 	err := handler.email.SendSimpleEmail(emailData.Text, emailData.Email)
 	if err != nil {
-		err = funcLog.Error(err)
 		return &proto.Empty{}, err
 	}
 
-	funcLog.Completed()
 	return &proto.Empty{}, nil
 }
