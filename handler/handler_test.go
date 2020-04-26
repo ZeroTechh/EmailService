@@ -1,4 +1,4 @@
-package serviceHandler
+package handler
 
 import (
 	"context"
@@ -10,16 +10,17 @@ import (
 
 func TestHandler(t *testing.T) {
 	assert := assert.New(t)
-
-	handler := Handler{}
-	handler.Init()
-	assert.True(true)
+	handler := New()
 
 	assert.True(config.Map("service").Bool("sendMails"))
 
-	_, err := handler.SendSimpleEmail(context.TODO(), &proto.EmailData{
-		Email: config.Map("smtp").Str("email"),
-		Text:  "test",
-	})
+	_, err := handler.SendSimpleEmail(
+		context.TODO(),
+		&proto.EmailData{
+			Email: config.Map("smtp").Str("email"),
+			Text:  "test",
+		},
+	)
+
 	assert.NoError(err)
 }
