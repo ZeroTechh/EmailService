@@ -28,6 +28,7 @@ func main() {
 		log,
 	)
 
+	log.Info("Service Started")
 	proto.RegisterEmailServer(grpcServer, handler)
 	if err := grpcServer.Serve(*listner); err != nil {
 		log.Fatal("Service Failed With Error", zap.Error(err))
