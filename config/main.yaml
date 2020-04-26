@@ -5,6 +5,6 @@ service:
 
 smtp:
   host: "smtp.gmail.com"
-  port: "587"
-  email: "---------------"
-  password: "-----------"
+  post: "587"
+  email: "--------------------"
+  password: "----------------"

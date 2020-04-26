@@ -8,21 +8,13 @@ import (
 
 func TestEmail(t *testing.T) {
 	assert := assert.New(t)
+	e := New()
 
-	assert.True(sendMails)
+	assert.True(sendMails, "Send mails needs to be true for testing")
 
-	email := Email{}
-	email.Init()
-
-	// Testing sending of a simple text email
-	err := email.SendSimpleEmail("TEST", smtpConfig.Str("email"))
-
-	assert.NoError(err)
-
-	err = email.SendSimpleEmail("TEST", "Invalid")
-	assert.Error(err)
+	assert.NoError(e.Simple("TEST", email))
+	assert.Error(e.Simple("TEST", "Invalid"))
 
 	sendMails = false
-	err = email.SendSimpleEmail("TEST", "invalid")
-	assert.NoError(err)
+	assert.NoError(e.Simple("TEST", "invalid"))
 }

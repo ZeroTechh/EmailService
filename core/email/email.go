@@ -7,38 +7,40 @@ import (
 )
 
 var (
-	config     = hades.GetConfig("main.yaml", []string{"config", "../config", "../../config"})
+	config    = hades.GetConfig("main.yaml", []string{"config", "../config", "../../config"})
+	sendMails = config.Map("service").Bool("sendMails")
+
 	smtpConfig = config.Map("smtp")
-	sendMails  = config.Map("service").Bool("sendMails")
+	host       = smtpConfig.Str("host")
+	port       = smtpConfig.Str("post")
+	email      = smtpConfig.Str("email")
+	password   = smtpConfig.Str("password")
+	hostname   = host + ":" + port
 )
 
-// Email will handle sending of emails
+// New creates a new Email.
+func New() *Email {
+	e := Email{}
+	e.init()
+	return &e
+}
+
+// Email will send emails.
 type Email struct {
 	auth smtp.Auth
 }
 
-// Init initializes
-func (email *Email) Init() {
-	email.auth = smtp.PlainAuth(
-		"",
-		smtpConfig.Str("email"),
-		smtpConfig.Str("password"),
-		smtpConfig.Str("host"),
-	)
+// init will initialize.
+func (e *Email) init() {
+	e.auth = smtp.PlainAuth("", email, password, host)
 }
 
-// SendSimpleEmail Is Used To Send A Basic Text Email
-func (email Email) SendSimpleEmail(text, toEmail string) error {
+// Simple will send a simple text email.
+func (e Email) Simple(text, to string) error {
 	if !sendMails {
-		// exit the function if sendMails is false. usually used in debug mode
 		return nil
 	}
 
 	return smtp.SendMail(
-		smtpConfig.Str("host")+":"+smtpConfig.Str("port"),
-		email.auth,
-		smtpConfig.Str("email"),
-		[]string{toEmail},
-		[]byte(text),
-	)
+		hostname, e.auth, email, []string{to}, []byte(text))
 }
